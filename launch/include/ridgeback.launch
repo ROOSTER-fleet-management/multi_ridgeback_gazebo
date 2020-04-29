@@ -1,0 +1,61 @@
+<launch>
+  <arg name="namespace" default="r0" />
+  <arg name="tfpre" default="$(arg namespace)_tf" />
+  <param name="tf_prefix" value="$(arg namespace)_tf" />
+  <arg name="robot_name"/>
+  <arg name="initX" default="0" />
+  <arg name="initY" default="0" />
+  <arg name="initYaw" default="0" />
+  
+  <!-- Configuration of Ridgeback which you would like to simulate.
+       See ridgeback_description for details. empty / base / base_sick / dual_hokuyo_lasers / dual_sick_lasers -->
+  <arg name="config" default="$(optenv RIDGEBACK_CONFIG base)" />
+
+  <param name="robot_description"
+         command="$(find ridgeback_description)/scripts/env_run
+                  $(find ridgeback_description)/urdf/configs/$(arg config)
+                  $(find xacro)/xacro $(find multi_ridgeback_gazebo)/urdf/ridgeback.urdf.xacro
+                  nsp:=$(arg namespace)
+					        tfpre:=$(arg tfpre)
+                  --inorder " />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  
+
+  <node name="robot1_spawner" pkg="gazebo_ros" type="spawn_model"
+        args="-x $(arg initX) -y $(arg initY) -Y $(arg initYaw) -urdf -param robot_description -model $(arg robot_name)" />
+  
+  <rosparam command="load" file="$(find multi_ridgeback_gazebo)/config/control.yaml" />
+  <rosparam param="ridgeback_velocity_controller/base_frame_id" subst_value="True">$(arg tfpre)/base_link</rosparam>
+  
+  <node name="base_controller_spawner" pkg="controller_manager" type="spawner" 
+        args="ridgeback_joint_publisher ridgeback_velocity_controller --shutdown-timeout 3"/>
+  
+  <!-- Localization using imu and odometry simulated by Gazebo -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization"></node>
+
+  <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" 
+        args="$(arg initX) $(arg initY) 0 $(arg initYaw) 0 0 /map /$(arg tfpre)/odom 100" />
+
+  <node pkg="topic_tools" type="relay" name="cmd_vel_relay"
+        args="cmd_vel ridgeback_velocity_controller/cmd_vel" />
+  
+  <arg name="twist_config" default="planar" />
+  <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server">
+    <remap from="twist_marker_server/cmd_vel" to="/cmd_vel" />
+    <rosparam command="load" file="$(find interactive_marker_twist_server)/config/$(arg twist_config).yaml" />
+  </node>
+
+  <!-- Load Ridgeback's description, controllers, and teleop nodes. -->
+  <!-- <include file="$(find ridgeback_description)/launch/description.launch">
+    <arg name="config" value="$(arg config)" />
+  </include> -->
+
+  <!-- <include file="$(find ridgeback_control)/launch/control.launch" />
+  
+  <include file="$(find ridgeback_control)/launch/teleop.launch">
+    <arg name="joystick" value="false"/>
+  </include> -->
+
+  
+
+</launch>
