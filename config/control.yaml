@@ -13,8 +13,7 @@ ridgeback_velocity_controller:
   twist_covariance_diagonal: [0.001, 0.001, 0.001, 1000000.0, 1000000.0, 0.03]
   cmd_vel_timeout: 0.25
 
-  # Base frame_id (this line not present in the original ridgeback file)
-  base_frame_id: r1_tf/base_link
+
 
   # Override URDF look-up for wheel separation since the parent link is not the base_link.
   wheel_separation_x: 0.638
@@ -51,7 +50,7 @@ ridgeback_velocity_controller:
 ekf_localization:
   frequency: 50
   two_d_mode: true
-  # removed / before ridgback_velocity_controller
+  
   odom0: ridgeback_velocity_controller/odom
   odom0_config: [false, false, false,
                  false, false, false,
@@ -59,7 +58,7 @@ ekf_localization:
                  false, false, true,
                  false, false, false]
   odom0_differential: false
-  # removed / before imu
+  
   imu0: imu/data
   imu0_config: [false, false, false,
                 false, false, false,
@@ -71,4 +70,4 @@ ekf_localization:
   odom_frame: odom
   base_link_frame: base_link
   world_frame: odom
-  map_frame: map
+  map_frame: /map

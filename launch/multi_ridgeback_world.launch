@@ -3,8 +3,8 @@
   <arg name="gui" default="true" />
   <arg name="headless" default="false" />
   <arg name="world_name" default="$(find ridgeback_gazebo)/worlds/ridgeback_race.world" />
-
-  
+  <!-- <arg name="world_name" default="$(find multi_ridgeback_gazebo)/worlds/willowgarage.world" /> -->
+   
   <!-- Launch Gazebo with the specified world -->
 
   <!-- <node name="rqt_console" pkg="rqt_console" type="rqt_console" output="screen" /> -->
@@ -17,8 +17,8 @@
     <arg name="world_name" value="$(arg world_name)" />
     <arg name="paused" value="false"/>
   </include>
-
-  <rosparam param="/gazebo_ros_control/pid_gains">
+  
+  <rosparam param="gazebo_ros_control/pid_gains">
     front_left_wheel:
       p: 1
       i: 0.1

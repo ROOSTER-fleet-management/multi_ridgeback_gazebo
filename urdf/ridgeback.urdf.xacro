@@ -306,6 +306,7 @@
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/$(arg nsp)</robotNamespace>
+      <legacyModeNS>true</legacyModeNS>
     </plugin>
 
     <plugin name="ridgeback_ros_force_based_move" filename="libridgeback_ros_force_based_move.so">
@@ -328,6 +329,7 @@
       <updateRate>50.0</updateRate>
       <bodyName>imu_link</bodyName>
       <topicName>imu/data</topicName>
+      <!-- it is important to put tfpre in frameId for ekf_localization to work  -->
       <frameId>$(arg tfpre)/base_link</frameId>
       <accelDrift>0.005 0.005 0.005</accelDrift>
       <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>

@@ -5,24 +5,24 @@
     <!-- <param name="tf_prefix" value="robot1_tf" /> -->
     <include file="$(find multi_ridgeback_gazebo)/launch/include/ridgeback.launch">
       <arg name="namespace" value="r1" />
-      <!-- <arg name="init_pose" value="-x 0 -y 0 -z 0.1" /> -->
+      <arg name="robot_name"  value="ridgeback1" />
+      <arg name="init_pose" value="-x 0 -y 0 -z 0.1" />
       <arg name="initX" value="0" />
       <arg name="initY" value="0" />
-      <arg name="initYaw" value="0.1" />
-      <arg name="robot_name"  value="Robot1" />
+      <arg name="initYaw" value="0" />
     </include>
   </group>
 
-  <!-- BEGIN ROBOT2-->
+<!-- BEGIN ROBOT2 -->
   <group ns="r2">
-    <param name="tf_prefix" value="robot2_tf" />
+    <!-- <param name="tf_prefix" value="robot1_tf" /> -->
     <include file="$(find multi_ridgeback_gazebo)/launch/include/ridgeback.launch">
       <arg name="namespace" value="r2" />
-      <!-- <arg name="init_pose" value="-x -1 -y 1 -z 0.1" /> -->
-      <arg name="initX" value="-1" />
+      <arg name="robot_name"  value="ridgeback2" />
+      <arg name="init_pose" value="-x 1 -y 1 -z 0.1" />
+      <arg name="initX" value="1" />
       <arg name="initY" value="1" />
-      <arg name="initYaw" value="0.1" />
-      <arg name="robot_name"  value="Robot2" />
+      <arg name="initYaw" value="0" />
     </include>
   </group>
 
