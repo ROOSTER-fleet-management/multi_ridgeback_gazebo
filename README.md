@@ -6,7 +6,11 @@ sudo apt-get install ros-kinetic-ridgeback-simulator ros-kinetic-ridgeback-deskt
 sudo apt-get install ros-kinetic-ridgeback-navigation
 ```
 
-Clone the repository into the src folder of your workspace and run catkin_make in the toplevel directory of your workspace. You can use the following roslaunch command straight out of the box.
+Clone the repository into the src folder of your workspace and run catkin_make in the toplevel directory of your workspace. You can then use the following roslaunch command straight out of the box, to start a gazebo simulation with 2 ridgebacks and two terminals to teleoperate the ridgebacks.
 ```console
-roslaunch multi_ridgeback_simulation multi_ridgeback_world.launch
+roslaunch multi_ridgeback_gazebo multi_ridgeback_world.launch
+```
+You can also launch rviz to visualize the ridgebacks, their TFs and their laser scans using the following launch command:
+```console
+roslaunch multi_ridgeback_gazebo multi_ridgeback_rviz.launch
 ```
