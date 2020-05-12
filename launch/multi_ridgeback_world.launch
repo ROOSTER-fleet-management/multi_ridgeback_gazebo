@@ -43,6 +43,11 @@
   <include file="$(find multi_ridgeback_gazebo)/launch/include/robots.launch" />
 
 <!--******************************-->
+<!-- launching rviz -->
+<!--******************************-->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find multi_ridgeback_gazebo)/rviz/multi_ridgeback_teleop.rviz" />
+
+<!--******************************-->
 <!-- Debugging tools -->
 <!--******************************-->
   <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nre_simmultihusky)/rviz/duohusky.rviz" output="screen"/>

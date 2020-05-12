@@ -63,7 +63,7 @@
   </rosparam>
 
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
-        args="$(arg init_pose) -urdf -model $(arg robot_name) -param robot_description" />
+        args="$(arg init_pose) -urdf -model $(arg robot_name) -param robot_description " output="screen"/>
 
   <arg name="twist_config" default="planar" />
   <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server">
