@@ -2,9 +2,9 @@
   <arg name="namespace" default="r0" />
   <arg name="tfpre" default="$(arg namespace)_tf" />
   <arg name="robot_name"/>
-  <arg name="init_pose" default="-x 0 -y 0 -z 0.1" />
   <arg name="initX" default="0" />
   <arg name="initY" default="0" />
+  <arg name="initZ" default="0.1" />
   <arg name="initYaw" default="0" />
   <!-- Configuration of Ridgeback which you would like to simulate.
        See ridgeback_description for details. empty / base / base_sick / dual_hokuyo_lasers / dual_sick_lasers -->
@@ -63,12 +63,12 @@
   </rosparam>
 
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
-        args="$(arg init_pose) -urdf -model $(arg robot_name) -param robot_description " output="screen"/>
+        args="-x $(arg initX) -y $(arg initY) -z $(arg initZ) -Y $(arg initYaw) -urdf -model $(arg robot_name) -param robot_description " output="screen"/>
 
-  <arg name="twist_config" default="planar" />
+  <!-- <arg name="twist_config" default="planar" />
   <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server">
     <remap from="twist_marker_server/cmd_vel" to="cmd_vel" />
     <rosparam command="load" file="$(find interactive_marker_twist_server)/config/$(arg twist_config).yaml" />
-  </node>
+  </node> -->
 
 </launch>
