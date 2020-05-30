@@ -1,5 +1,5 @@
 <launch>
-  <arg name="namespace" default="r0" />
+  <arg name="namespace" default="rdg00" />
   <arg name="tfpre" default="$(arg namespace)_tf" />
   <arg name="robot_name"/>
   <arg name="initX" default="0" />
@@ -25,9 +25,6 @@
   <rosparam command="load" file="$(find multi_ridgeback_gazebo)/config/control.yaml" />
   <rosparam param="ekf_localization/odom0" subst_value="True">odom</rosparam>
   <rosparam param="ekf_localization/imu0" subst_value="True">imu/data</rosparam>
-  <!-- <rosparam param="ekf_localization/odom_frame" subst_value="True">odom</rosparam>
-  <rosparam param="ekf_localization/base_link_frame" subst_value="True">base_link</rosparam>
-  <rosparam param="ekf_localization/world_frame" subst_value="True">odom</rosparam> -->
   
   <node name="controller_spawner" pkg="controller_manager" type="spawner" 
         args="ridgeback_joint_publisher ridgeback_velocity_controller"/>
@@ -64,11 +61,5 @@
 
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
         args="-x $(arg initX) -y $(arg initY) -z $(arg initZ) -Y $(arg initYaw) -urdf -model $(arg robot_name) -param robot_description " output="screen"/>
-
-  <!-- <arg name="twist_config" default="planar" />
-  <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server">
-    <remap from="twist_marker_server/cmd_vel" to="cmd_vel" />
-    <rosparam command="load" file="$(find interactive_marker_twist_server)/config/$(arg twist_config).yaml" />
-  </node> -->
 
 </launch>
