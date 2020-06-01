@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <xacro:macro name="sick_lms1xx_mount" params="prefix topic location">
 
-    <xacro:sick_lms1xx frame="$(arg tfpre)/${prefix}_laser" topic="${topic}" />
+    <xacro:sick_lms1xx frame="$(arg tfpre)/${prefix}_laser" topic="$(arg nsp)/${topic}" />
 
     <joint name="${prefix}_laser_joint" type="fixed">
       <!-- This offset is from the base of the bracket to the LIDAR's focal point. -->

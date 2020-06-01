@@ -61,8 +61,9 @@
           </noise>
         </ray>
         <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
-          <topicName>${topic}</topicName>
+          <topicName>$(arg nsp)/${topic}</topicName>
           <frameName>$(arg tfpre)/${prefix}_laser</frameName>
+          <robotNamespace>/</robotNamespace>
           <hokuyoMinIntensity>101</hokuyoMinIntensity>
         </plugin>
       </sensor>
