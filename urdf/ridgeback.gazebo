@@ -2,16 +2,17 @@
 <robot>
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/</robotNamespace>
+      <robotNamespace>$(arg nsp)</robotNamespace>
+      <legacyModeNS>true</legacyModeNS>
     </plugin>
 
     <plugin name="ridgeback_ros_force_based_move" filename="libridgeback_ros_force_based_move.so">
-      <robotNamespace>/</robotNamespace>
+      <robotNamespace>$(arg nsp)</robotNamespace>
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
+      <odometryFrame>$(arg tfpre)/odom</odometryFrame>
       <odometryRate>25.0</odometryRate>
-      <robotBaseFrame>base_link</robotBaseFrame>
+      <robotBaseFrame>$(arg tfpre)/base_link</robotBaseFrame>
       <cmdVelTimeOut>0.25</cmdVelTimeOut>
       <!-- Don't publish a transform: the controller does it. -->
       <publishOdometryTf>0</publishOdometryTf>
@@ -21,11 +22,11 @@
     </plugin>
 
     <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
-      <robotNamespace>/</robotNamespace>
+      <robotNamespace>$(arg nsp)</robotNamespace>
       <updateRate>50.0</updateRate>
-      <bodyName>imu_link</bodyName>
+      <bodyName>$(arg tfpre)/imu_link</bodyName>
       <topicName>imu/data</topicName>
-      <frameId>base_link</frameId>
+      <frameId>$(arg tfpre)/base_link</frameId>
       <accelDrift>0.005 0.005 0.005</accelDrift>
       <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
       <rateDrift>0.00005 0.00005 0.00005</rateDrift>
@@ -36,52 +37,52 @@
 
     <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
       <jointName>front_rocker</jointName>
-      <robotNamespace>/</robotNamespace>
+      <robotNamespace>/$(arg nsp)</robotNamespace>
       <updateRate>50.0</updateRate>
     </plugin>
   </gazebo>
 
   <!-- All static links get collapsed down to base_link in Gazebo, so that's
        the one to apply the colour to (in Gazebo 5+). -->
-  <gazebo reference="base_link">
+  <gazebo reference="$(arg tfpre)/base_link">
     <material>Gazebo/DarkGrey</material>
     <gravity>true</gravity>
   </gazebo>
 
   <!-- Individual link colouring still needed in Gazebo 2.x -->
-  <gazebo reference="chassis_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="top_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="left_side_cover_link"><material>Gazebo/Yellow</material></gazebo>
-  <gazebo reference="right_side_cover_link"><material>Gazebo/Yellow</material></gazebo>
-  <gazebo reference="front_cover_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="rear_cover_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="front_lights_link"><material>Gazebo/White</material></gazebo>
-  <gazebo reference="rear_lights_link"><material>Gazebo/Red</material></gazebo>
-  <gazebo reference="front_rocker_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="rear_rocker_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="axle_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/chassis_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/top_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/left_side_cover_link"><material>Gazebo/Yellow</material></gazebo>
+  <gazebo reference="$(arg tfpre)/right_side_cover_link"><material>Gazebo/Yellow</material></gazebo>
+  <gazebo reference="$(arg tfpre)/front_cover_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/rear_cover_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/front_lights_link"><material>Gazebo/White</material></gazebo>
+  <gazebo reference="$(arg tfpre)/rear_lights_link"><material>Gazebo/Red</material></gazebo>
+  <gazebo reference="$(arg tfpre)/front_rocker_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/rear_rocker_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/axle_link"><material>Gazebo/DarkGrey</material></gazebo>
 
   <!-- Wheel friction to zero, as movement is handled by applying forces at
        the body level. -->
-  <gazebo reference="front_left_wheel_link">
+  <gazebo reference="$(arg tfpre)/front_left_wheel_link">
     <material>Gazebo/DarkGrey</material>
     <mu1>0.0</mu1>
     <mu2>0.0</mu2>
   </gazebo>
 
-  <gazebo reference="front_right_wheel_link">
+  <gazebo reference="$(arg tfpre)/front_right_wheel_link">
     <material>Gazebo/DarkGrey</material>
     <mu1>0.0</mu1>
     <mu2>0.0</mu2>
   </gazebo>
 
-  <gazebo reference="rear_left_wheel_link">
+  <gazebo reference="$(arg tfpre)/rear_left_wheel_link">
     <material>Gazebo/DarkGrey</material>
     <mu1>0.0</mu1>
     <mu2>0.0</mu2>
   </gazebo>
 
-  <gazebo reference="rear_right_wheel_link">
+  <gazebo reference="$(arg tfpre)/rear_right_wheel_link">
     <material>Gazebo/DarkGrey</material>
     <mu1>0.0</mu1>
     <mu2>0.0</mu2>
