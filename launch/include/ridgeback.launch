@@ -10,15 +10,13 @@
        See ridgeback_description for details. empty / base / base_sick / dual_hokuyo_lasers / dual_sick_lasers -->
   <arg name="config" default="$(optenv RIDGEBACK_CONFIG base_sick)" />
 
-  <!-- <param name="tf_prefix" value="$(arg tfpre)" /> -->
-
   <param name="robot_description"
          command="$(find ridgeback_description)/scripts/env_run
                   $(find ridgeback_description)/urdf/configs/$(arg config)
                   $(find xacro)/xacro $(find multi_ridgeback_gazebo)/urdf/ridgeback.urdf.xacro
                   nsp:=$(arg namespace)
                   tfpre:=$(arg tfpre)
-                  --inorder " />
+                  " />
   
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/> 
   
@@ -43,9 +41,6 @@
   
   <node pkg="topic_tools" type="relay" name="cmd_vel_relay"
         args="/$(arg namespace)/cmd_vel /$(arg namespace)/ridgeback_velocity_controller/cmd_vel" />
-  
-  <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" 
-        args="$(arg initX) $(arg initY) 0 $(arg initYaw) 0 0 /map /$(arg tfpre)/odom 100" />
   
   <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_cmd_vel" output="screen" launch-prefix="gnome-terminal -e"/>
 
