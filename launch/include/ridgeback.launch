@@ -8,7 +8,7 @@
   <arg name="initYaw" default="0" />
   <!-- Configuration of Ridgeback which you would like to simulate.
        See ridgeback_description for details. empty / base / base_sick / dual_hokuyo_lasers / dual_sick_lasers -->
-  <arg name="config" default="$(optenv RIDGEBACK_CONFIG base)" />
+  <arg name="config" default="$(optenv RIDGEBACK_CONFIG base_sick)" />
 
   <!-- <param name="tf_prefix" value="$(arg tfpre)" /> -->
 
