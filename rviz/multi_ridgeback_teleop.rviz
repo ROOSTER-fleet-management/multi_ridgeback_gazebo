@@ -8,8 +8,6 @@ Panels:
         - /Status1
         - /ridgeback11
         - /ridgeback21
-        - /ridgeback21/LaserScan1
-        - /ridgeback21/base_link_Axes1
       Splitter Ratio: 0.7127071619033813
     Tree Height: 539
   - Class: rviz/Selection
@@ -546,16 +544,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 41.103424072265625
+      Distance: 29.177467346191406
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 4.137450218200684
-        Y: -4.056998252868652
-        Z: -0.05688735470175743
+        X: 3.7997260093688965
+        Y: 0.2450139969587326
+        Z: -2.86006236076355
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
