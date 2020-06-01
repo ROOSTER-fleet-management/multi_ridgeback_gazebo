@@ -10,7 +10,7 @@
        See ridgeback_description for details. empty / base / base_sick / dual_hokuyo_lasers / dual_sick_lasers -->
   <arg name="config" default="$(optenv RIDGEBACK_CONFIG base)" />
 
-  <param name="tf_prefix" value="$(arg tfpre)" />
+  <!-- <param name="tf_prefix" value="$(arg tfpre)" /> -->
 
   <param name="robot_description"
          command="$(find ridgeback_description)/scripts/env_run
@@ -25,7 +25,16 @@
   <rosparam command="load" file="$(find multi_ridgeback_gazebo)/config/control.yaml" />
   <rosparam param="ekf_localization/odom0" subst_value="True">odom</rosparam>
   <rosparam param="ekf_localization/imu0" subst_value="True">imu/data</rosparam>
+  <rosparam param="ekf_localization/odom_frame" subst_value="True">$(arg tfpre)/odom</rosparam>
+  <rosparam param="ekf_localization/base_link_frame" subst_value="True">$(arg tfpre)/base_link</rosparam>
+  <rosparam param="ekf_localization/world_frame" subst_value="True">$(arg tfpre)/odom</rosparam>
   
+  <!-- <rosparam param="ridgeback_velocity_controller/front_left_wheel_joint" subst_value="True">$(arg namespace)/front_left_wheel</rosparam>
+  <rosparam param="ridgeback_velocity_controller/back_left_wheel_joint" subst_value="True">$(arg namespace)/back_left_wheel</rosparam>
+  <rosparam param="ridgeback_velocity_controller/front_right_wheel_joint" subst_value="True">$(arg namespace)/front_right_wheel</rosparam>
+  <rosparam param="ridgeback_velocity_controller/back_right_wheel_joint" subst_value="True">$(arg namespace)/back_right_wheel</rosparam> -->
+
+
   <node name="controller_spawner" pkg="controller_manager" type="spawner" 
         args="ridgeback_joint_publisher ridgeback_velocity_controller"/>
 
@@ -38,7 +47,7 @@
   <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" 
         args="$(arg initX) $(arg initY) 0 $(arg initYaw) 0 0 /map /$(arg tfpre)/odom 100" />
   
-  <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_cmd_vel" output="screen" launch-prefix="gnome-terminal --command"/>
+  <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_cmd_vel" output="screen" launch-prefix="gnome-terminal -e"/>
 
   <rosparam param="gazebo_ros_control/pid_gains">
     front_left_wheel:

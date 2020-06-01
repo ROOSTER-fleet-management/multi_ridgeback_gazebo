@@ -20,7 +20,7 @@
   </group>
 
 <!--  ..............................  ROBOT2  ......................................  -->
-  <arg name="r2_namespace" default="rdg02" />
+  <!-- <arg name="r2_namespace" default="rdg02" />
   <arg name="r2_tfpre" default="$(arg r2_namespace)_tf" />
   <arg name="r2_robot_name"  default="ridgeback_$(arg r2_namespace)" />
   <arg name="r2_initX" default="6.7" />
@@ -36,6 +36,6 @@
       <arg name="initY" value="$(arg r2_initY)" />
       <arg name="initYaw" value="$(arg r2_initYaw)" />
     </include>
-  </group>
+  </group> -->
 
 </launch>

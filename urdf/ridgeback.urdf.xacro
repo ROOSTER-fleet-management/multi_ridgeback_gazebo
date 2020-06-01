@@ -21,8 +21,8 @@
   <xacro:property name="dummy_inertia" value="1e-09"/>
   
   <!-- passing the namespace and tf prefix for gazebo elements -->
-  <xacro:arg name="nsp" default="r0" />
-  <xacro:arg name="tfpre" default="r0_tf" />
+  <xacro:arg name="nsp" default="rdg00" />
+  <xacro:arg name="tfpre" default="$(arg nsp)_tf" />
 
   <material name="dark_grey"><color rgba="0.2 0.2 0.2 1.0" /></material>
   <material name="light_grey"><color rgba="0.4 0.4 0.4 1.0" /></material>
@@ -32,7 +32,7 @@
   <material name="black"><color rgba="0.15 0.15 0.15 1.0" /></material>
 
   <xacro:macro name="wheel" params="prefix side *joint_pose">
-    <link name="${prefix}_${side}_wheel_link">
+    <link name="$(arg tfpre)/${prefix}_${side}_wheel_link">
       <visual>
         <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
         <geometry>
@@ -57,13 +57,13 @@
     </link>
 
     <joint name="${prefix}_${side}_wheel" type="continuous">
-      <parent link="${prefix}_rocker_link"/>
-      <child link="${prefix}_${side}_wheel_link" />
+      <parent link="$(arg tfpre)/${prefix}_rocker_link"/>
+      <child link="$(arg tfpre)/${prefix}_${side}_wheel_link" />
       <xacro:insert_block name="joint_pose" />
       <axis xyz="0 1 0" />
     </joint>
 
-    <transmission name="${prefix}_wheel_trans">
+    <transmission name=" ${prefix}_wheel_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${prefix}_${side}_wheel">
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
@@ -76,7 +76,7 @@
 
 
   <xacro:macro name="rocker" params="prefix joint_type location *joint_limits">
-    <link name="${prefix}_rocker_link">
+    <link name="$(arg tfpre)/${prefix}_rocker_link">
       <visual>
         <origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}" />
         <geometry>
@@ -95,8 +95,8 @@
     </link>
 
     <joint name="${prefix}_rocker" type="${joint_type}">
-      <parent link="axle_link"/>
-      <child link="${prefix}_rocker_link" />
+      <parent link="$(arg tfpre)/axle_link"/>
+      <child link="$(arg tfpre)/${prefix}_rocker_link" />
       <origin xyz="${location*rocker_offset} 0 0" rpy="0 0 0" />
       <axis xyz="1 0 0" />
       <xacro:insert_block name="joint_limits" />
@@ -118,15 +118,15 @@
     <limit effort="0" velocity="0" />
   </xacro:rocker>
 
-  <link name="base_link"></link>
+  <link name="$(arg tfpre)/base_link"></link>
 
   <joint name="base_link_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="base_link"/>
-    <child link="chassis_link" />
+    <parent link="$(arg tfpre)/base_link"/>
+    <child link="$(arg tfpre)/chassis_link" />
   </joint>
 
-  <link name="chassis_link">
+  <link name="$(arg tfpre)/chassis_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
@@ -152,16 +152,16 @@
 
   <joint name="right_side_cover_link_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="chassis_link"/>
-    <child link="right_side_cover_link" />
+    <parent link="$(arg tfpre)/chassis_link"/>
+    <child link="$(arg tfpre)/right_side_cover_link" />
   </joint>
   <joint name="left_side_cover_link_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="chassis_link"/>
-    <child link="left_side_cover_link" />
+    <parent link="$(arg tfpre)/chassis_link"/>
+    <child link="$(arg tfpre)/left_side_cover_link" />
   </joint>
 
-  <link name="left_side_cover_link">
+  <link name="$(arg tfpre)/left_side_cover_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 ${PI}" />
       <geometry>
@@ -170,7 +170,7 @@
       <material name="yellow" />
     </visual>
   </link>
-  <link name="right_side_cover_link">
+  <link name="$(arg tfpre)/right_side_cover_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
@@ -182,11 +182,11 @@
 
   <joint name="front_cover_link_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="chassis_link"/>
-    <child link="front_cover_link" />
+    <parent link="$(arg tfpre)/chassis_link"/>
+    <child link="$(arg tfpre)/front_cover_link" />
   </joint>
 
-  <link name="front_cover_link">
+  <link name="$(arg tfpre)/front_cover_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
@@ -198,11 +198,11 @@
 
   <joint name="rear_cover_link_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="chassis_link"/>
-    <child link="rear_cover_link" />
+    <parent link="$(arg tfpre)/chassis_link"/>
+    <child link="$(arg tfpre)/rear_cover_link" />
   </joint>
 
-  <link name="rear_cover_link">
+  <link name="$(arg tfpre)/rear_cover_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 ${PI}" />
       <geometry>
@@ -214,16 +214,16 @@
 
   <joint name="front_lights_link_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="chassis_link"/>
-    <child link="front_lights_link" />
+    <parent link="$(arg tfpre)/chassis_link"/>
+    <child link="$(arg tfpre)/front_lights_link" />
   </joint>
   <joint name="rear_lights_link_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="chassis_link"/>
-    <child link="rear_lights_link" />
+    <parent link="$(arg tfpre)/chassis_link"/>
+    <child link="$(arg tfpre)/rear_lights_link" />
   </joint>
 
-  <link name="front_lights_link">
+  <link name="$(arg tfpre)/front_lights_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
@@ -232,7 +232,7 @@
       <material name="white" />
     </visual>
   </link>
-  <link name="rear_lights_link">
+  <link name="$(arg tfpre)/rear_lights_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 ${PI}" />
       <geometry>
@@ -244,11 +244,11 @@
 
   <joint name="top_link_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="chassis_link"/>
-    <child link="top_link" />
+    <parent link="$(arg tfpre)/chassis_link"/>
+    <child link="$(arg tfpre)/top_link" />
   </joint>
 
-  <link name="top_link">
+  <link name="$(arg tfpre)/top_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
@@ -266,11 +266,11 @@
 
   <joint name="axle_joint" type="fixed">
     <origin xyz="0 0 ${axle_offset}" rpy="0 0 0" />
-    <parent link="chassis_link"/>
-    <child link="axle_link" />
+    <parent link="$(arg tfpre)/chassis_link"/>
+    <child link="$(arg tfpre)/axle_link" />
   </joint>
 
-  <link name="axle_link">
+  <link name="$(arg tfpre)/axle_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 ${PI/2} 0" />
       <geometry>
@@ -280,7 +280,7 @@
     </visual>
   </link>
 
-  <link name="imu_link">
+  <link name="$(arg tfpre)/imu_link">
     <inertial>
       <mass value="0.001"/>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -288,15 +288,15 @@
     </inertial>
   </link>
   <joint name="imu_joint" type="fixed">
-    <parent link="chassis_link" />
-    <child link="imu_link" />
+    <parent link="$(arg tfpre)/chassis_link" />
+    <child link="$(arg tfpre)/imu_link" />
     <origin xyz="${imu_offset_x} ${imu_offset_y} ${imu_offset_z}" rpy="0 0 0"/>
   </joint>
 
-  <link name="mid_mount" />
+  <link name="$(arg tfpre)/mid_mount" />
   <joint name="mid_mount_joint" type="fixed">
-    <parent link="base_link" />
-    <child link="mid_mount" />
+    <parent link="$(arg tfpre)/base_link" />
+    <child link="$(arg tfpre)/mid_mount" />
     <origin xyz="0 0 ${deck_height}" rpy="0 0 0"/>
   </joint>
 
@@ -313,9 +313,9 @@
       <robotNamespace>/$(arg nsp)</robotNamespace>
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
+      <odometryFrame>$(arg tfpre)/odom</odometryFrame>
       <odometryRate>25.0</odometryRate>
-      <robotBaseFrame>base_link</robotBaseFrame>
+      <robotBaseFrame>$(arg tfpre)/base_link</robotBaseFrame>
       <cmdVelTimeOut>0.25</cmdVelTimeOut>
       <!-- Don't publish a transform: the controller does it. -->
       <publishOdometryTf>0</publishOdometryTf>
@@ -327,7 +327,7 @@
     <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
       <robotNamespace>/$(arg nsp)</robotNamespace>
       <updateRate>50.0</updateRate>
-      <bodyName>imu_link</bodyName>
+      <bodyName>$(arg tfpre)/imu_link</bodyName>
       <topicName>imu/data</topicName>
       <!-- it is important to put tfpre in frameId for ekf_localization to work  -->
       <frameId>$(arg tfpre)/base_link</frameId>
@@ -348,45 +348,45 @@
 
   <!-- All static links get collapsed down to base_link in Gazebo, so that's
        the one to apply the colour to (in Gazebo 5+). -->
-  <gazebo reference="base_link">
+  <gazebo reference="$(arg tfpre)/base_link">
     <material>Gazebo/DarkGrey</material>
     <gravity>true</gravity>
   </gazebo>
 
   <!-- Individual link colouring still needed in Gazebo 2.x -->
-  <gazebo reference="chassis_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="top_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="left_side_cover_link"><material>Gazebo/Yellow</material></gazebo>
-  <gazebo reference="right_side_cover_link"><material>Gazebo/Yellow</material></gazebo>
-  <gazebo reference="front_cover_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="rear_cover_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="front_lights_link"><material>Gazebo/White</material></gazebo>
-  <gazebo reference="rear_lights_link"><material>Gazebo/Red</material></gazebo>
-  <gazebo reference="front_rocker_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="rear_rocker_link"><material>Gazebo/DarkGrey</material></gazebo>
-  <gazebo reference="axle_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/chassis_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/top_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/left_side_cover_link"><material>Gazebo/Yellow</material></gazebo>
+  <gazebo reference="$(arg tfpre)/right_side_cover_link"><material>Gazebo/Yellow</material></gazebo>
+  <gazebo reference="$(arg tfpre)/front_cover_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/rear_cover_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/front_lights_link"><material>Gazebo/White</material></gazebo>
+  <gazebo reference="$(arg tfpre)/rear_lights_link"><material>Gazebo/Red</material></gazebo>
+  <gazebo reference="$(arg tfpre)/front_rocker_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/rear_rocker_link"><material>Gazebo/DarkGrey</material></gazebo>
+  <gazebo reference="$(arg tfpre)/axle_link"><material>Gazebo/DarkGrey</material></gazebo>
 
   <!-- Wheel friction to zero, as movement is handled by applying forces at
        the body level. -->
-  <gazebo reference="front_left_wheel_link">
+  <gazebo reference="$(arg tfpre)/front_left_wheel_link">
     <material>Gazebo/DarkGrey</material>
     <mu1>0.0</mu1>
     <mu2>0.0</mu2>
   </gazebo>
 
-  <gazebo reference="front_right_wheel_link">
+  <gazebo reference="$(arg tfpre)/front_right_wheel_link">
     <material>Gazebo/DarkGrey</material>
     <mu1>0.0</mu1>
     <mu2>0.0</mu2>
   </gazebo>
 
-  <gazebo reference="rear_left_wheel_link">
+  <gazebo reference="$(arg tfpre)/rear_left_wheel_link">
     <material>Gazebo/DarkGrey</material>
     <mu1>0.0</mu1>
     <mu2>0.0</mu2>
   </gazebo>
 
-  <gazebo reference="rear_right_wheel_link">
+  <gazebo reference="$(arg tfpre)/rear_right_wheel_link">
     <material>Gazebo/DarkGrey</material>
     <mu1>0.0</mu1>
     <mu2>0.0</mu2>
@@ -397,7 +397,7 @@
   <!-- Optional standard accessories, including their simulation data. The rendering
        of these into the final description is controlled by optenv variables, which
        default each one to off.-->
-  <xacro:include filename="$(find ridgeback_description)/urdf/accessories.urdf.xacro" />
+  <xacro:include filename="$(find multi_ridgeback_gazebo)/urdf/accessories.urdf.xacro" />
 
   <!-- Optional custom includes. -->
   <xacro:include filename="$(optenv RIDGEBACK_URDF_EXTRAS empty.urdf)" />
