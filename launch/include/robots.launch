@@ -17,6 +17,8 @@
       <arg name="initY" value="$(arg r1_initY)" />
       <arg name="initYaw" value="$(arg r1_initYaw)" />
     </include>
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" 
+        args="$(arg r1_initX) $(arg r1_initY) 0 $(arg r1_initYaw) 0 0 map /$(arg r1_tfpre)/odom 100" />
   </group>
 
 <!--  ..............................  ROBOT2  ......................................  -->
@@ -36,6 +38,8 @@
       <arg name="initY" value="$(arg r2_initY)" />
       <arg name="initYaw" value="$(arg r2_initYaw)" />
     </include>
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" 
+        args="$(arg r2_initX) $(arg r2_initY) 0 $(arg r2_initYaw) 0 0 map $(arg r2_tfpre)/odom 100" />
   </group>
 
 </launch>
