@@ -23,7 +23,8 @@
   
   <!-- Load controller configuration -->
   <rosparam command="load" file="$(find multi_ridgeback_gazebo)/config/control.yaml" />
-  <rosparam param="ekf_localization/odom0" subst_value="True">odom</rosparam>
+  <rosparam param="ridgeback_velocity_controller/base_frame_id" subst_value="True">$(arg tfpre)/base_link</rosparam>
+  <rosparam param="ridgeback_velocity_controller/odom_frame_id" subst_value="True">$(arg tfpre)/odom</rosparam>
   <rosparam param="ekf_localization/imu0" subst_value="True">imu/data</rosparam>
   <rosparam param="ekf_localization/odom_frame" subst_value="True">$(arg tfpre)/odom</rosparam>
   <rosparam param="ekf_localization/base_link_frame" subst_value="True">$(arg tfpre)/base_link</rosparam>
