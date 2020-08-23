@@ -5,6 +5,7 @@
   <arg name="world_name" default="$(find ridgeback_gazebo)/worlds/ridgeback_race.world" />
   <!-- <arg name="world_name" default="$(find multi_ridgeback_gazebo)/worlds/willowgarage.world" /> -->
   
+  <!-- Launching gazebo server with the specified world and a gazebo GUI client -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="debug" value="0" />
     <arg name="gui" value="$(arg gui)" />

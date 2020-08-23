@@ -6,11 +6,12 @@
   <arg name="initY" default="0" />
   <arg name="initZ" default="0.1" />
   <arg name="initYaw" default="0" />
-  <!-- Configuration of Ridgeback which you would like to simulate.
-       See ridgeback_description for details. empty / base / base_sick / dual_hokuyo_lasers / dual_sick_lasers -->
+  <!-- Configuration of the Ridgeback that you would like to simulate.
+  	See ROS package ridgeback_description for details. 
+		Available configurations are empty / base / base_sick / dual_hokuyo_lasers / dual_sick_lasers -->
   <arg name="config" default="$(optenv RIDGEBACK_CONFIG base_sick)" />
 
-  <!-- Load robot description -->
+  <!-- Loading robot description -->
   <param name="robot_description"
          command="$(find ridgeback_description)/scripts/env_run
                   $(find ridgeback_description)/urdf/configs/$(arg config)
@@ -21,9 +22,10 @@
   
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/> 
   
-  <!-- Load controller configuration -->
+  <!-- Loading parameters for configuring the velocity and joint controllers  
+		and configuring extended kalman filter for odometry filtering -->
   <rosparam command="load" file="$(find multi_ridgeback_gazebo)/config/control.yaml" />
-  <rosparam param="ridgeback_velocity_controller/base_frame_id" subst_value="True">$(arg tfpre)/base_link</rosparam>
+	<rosparam param="ridgeback_velocity_controller/base_frame_id" subst_value="True">$(arg tfpre)/base_link</rosparam>
   <rosparam param="ridgeback_velocity_controller/odom_frame_id" subst_value="True">$(arg tfpre)/odom</rosparam>
   <rosparam param="ekf_localization/imu0" subst_value="True">imu/data</rosparam>
   <rosparam param="ekf_localization/odom_frame" subst_value="True">$(arg tfpre)/odom</rosparam>
@@ -35,25 +37,28 @@
   <rosparam param="ridgeback_velocity_controller/front_right_wheel_joint" subst_value="True">$(arg namespace)/front_right_wheel</rosparam>
   <rosparam param="ridgeback_velocity_controller/back_right_wheel_joint" subst_value="True">$(arg namespace)/back_right_wheel</rosparam> -->
 
-  <!-- Spawn controllers -->
+  <!-- Spawning the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" 
         args="ridgeback_joint_publisher ridgeback_velocity_controller"/>
 
-  <!-- Start EKF for localization -->
+	<node pkg="topic_tools" type="relay" name="cmd_vel_relay"
+        args="/$(arg namespace)/cmd_vel /$(arg namespace)/ridgeback_velocity_controller/cmd_vel" />
+
+  <!-- Starting EKF for fusing controller odometry with IMU and generating filtered odometry -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization"></node>
   
-  <node pkg="topic_tools" type="relay" name="cmd_vel_relay"
-        args="/$(arg namespace)/cmd_vel /$(arg namespace)/ridgeback_velocity_controller/cmd_vel" />
-  
-  <!-- <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_cmd_vel" output="screen" launch-prefix="gnome-terminal -e"/> -->
-
-  
+  <!-- Launching interactive twist marker server to teleoperate the Ridgeback from Rviz -->
   <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server">
     <param name="link_name" value= "$(arg tfpre)/base_link" />
     <param name="robot_name" value= "$(arg robot_name)" />
     <remap from="twist_marker_server/cmd_vel" to="/$(arg namespace)/cmd_vel" /> 
     <rosparam command="load" file="$(find interactive_marker_twist_server)/config/planar.yaml" />
   </node>
+	
+	<!-- Alternatively, the Ridgeback can be teleoperated from a terminal by uncommenting the following line.
+		Note: this requires installing teleop_twist_keyboard ROS package 
+		that can be installed by running this bash command: sudo apt-get install ros-melodic-teleop-twist-keyboard -->
+	<!-- <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_cmd_vel" output="screen" launch-prefix="gnome-terminal -e"/> -->
 
   <rosparam param="gazebo_ros_control/pid_gains">
     front_left_wheel:
@@ -74,7 +79,7 @@
       d: 0
   </rosparam>
   
-  <!-- Spawn robot in gazebo -->
+  <!-- Spawning the Ridgeback in Gazebo -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
         args="-x $(arg initX) -y $(arg initY) -z $(arg initZ) -Y $(arg initYaw) -urdf -model $(arg robot_name) -param robot_description " output="screen"/>
 

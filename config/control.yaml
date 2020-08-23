@@ -1,3 +1,5 @@
+# parameters for setting up velocity and joint state controller for the Ridgeback
+
 ridgeback_joint_publisher:
   type: "joint_state_controller/JointStateController"
   publish_rate: 50
@@ -14,8 +16,6 @@ ridgeback_velocity_controller:
   cmd_vel_timeout: 0.25
   base_frame_id: "base_link" 
   odom_frame_id: "odom" 
-
-
 
   # Override URDF look-up for wheel separation since the parent link is not the base_link.
   wheel_separation_x: 0.638
@@ -48,6 +48,9 @@ ridgeback_velocity_controller:
       max_velocity           : 2.0   # rad/s
       has_acceleration_limits: true
       max_acceleration       : 1.0   # rad/s^2
+
+# parameters for setting up the Extended Kalman Filter for fusing odometry with IMU data 
+# to generate filtered odometry
 
 ekf_localization:
   frequency: 50
