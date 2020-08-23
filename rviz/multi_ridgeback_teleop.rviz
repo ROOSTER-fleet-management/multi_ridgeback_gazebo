@@ -8,7 +8,7 @@ Panels:
         - /Status1
         - /ridgeback11
         - /ridgeback21
-      Splitter Ratio: 0.7127071619033813
+      Splitter Ratio: 0.5441176295280457
     Tree Height: 539
   - Class: rviz/Selection
     Name: Selection
@@ -62,85 +62,85 @@ Visualization Manager:
         map:
           Value: true
         rdg01_tf/axle_link:
-          Value: true
+          Value: false
         rdg01_tf/base_link:
           Value: true
         rdg01_tf/chassis_link:
-          Value: true
+          Value: false
         rdg01_tf/front_cover_link:
-          Value: true
+          Value: false
         rdg01_tf/front_laser:
-          Value: true
+          Value: false
         rdg01_tf/front_left_wheel_link:
-          Value: true
+          Value: false
         rdg01_tf/front_lights_link:
-          Value: true
+          Value: false
         rdg01_tf/front_right_wheel_link:
-          Value: true
+          Value: false
         rdg01_tf/front_rocker_link:
-          Value: true
+          Value: false
         rdg01_tf/imu_link:
-          Value: true
+          Value: false
         rdg01_tf/left_side_cover_link:
-          Value: true
+          Value: false
         rdg01_tf/mid_mount:
-          Value: true
+          Value: false
         rdg01_tf/odom:
           Value: true
         rdg01_tf/rear_cover_link:
-          Value: true
+          Value: false
         rdg01_tf/rear_left_wheel_link:
-          Value: true
+          Value: false
         rdg01_tf/rear_lights_link:
-          Value: true
+          Value: false
         rdg01_tf/rear_right_wheel_link:
-          Value: true
+          Value: false
         rdg01_tf/rear_rocker_link:
-          Value: true
+          Value: false
         rdg01_tf/right_side_cover_link:
-          Value: true
+          Value: false
         rdg01_tf/top_link:
-          Value: true
+          Value: false
         rdg02_tf/axle_link:
-          Value: true
+          Value: false
         rdg02_tf/base_link:
           Value: true
         rdg02_tf/chassis_link:
-          Value: true
+          Value: false
         rdg02_tf/front_cover_link:
-          Value: true
+          Value: false
         rdg02_tf/front_laser:
-          Value: true
+          Value: false
         rdg02_tf/front_left_wheel_link:
-          Value: true
+          Value: false
         rdg02_tf/front_lights_link:
-          Value: true
+          Value: false
         rdg02_tf/front_right_wheel_link:
-          Value: true
+          Value: false
         rdg02_tf/front_rocker_link:
-          Value: true
+          Value: false
         rdg02_tf/imu_link:
-          Value: true
+          Value: false
         rdg02_tf/left_side_cover_link:
-          Value: true
+          Value: false
         rdg02_tf/mid_mount:
-          Value: true
+          Value: false
         rdg02_tf/odom:
           Value: true
         rdg02_tf/rear_cover_link:
-          Value: true
+          Value: false
         rdg02_tf/rear_left_wheel_link:
-          Value: true
+          Value: false
         rdg02_tf/rear_lights_link:
-          Value: true
+          Value: false
         rdg02_tf/rear_right_wheel_link:
-          Value: true
+          Value: false
         rdg02_tf/rear_rocker_link:
-          Value: true
+          Value: false
         rdg02_tf/right_side_cover_link:
-          Value: true
+          Value: false
         rdg02_tf/top_link:
-          Value: true
+          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -330,9 +330,9 @@ Visualization Manager:
           Visual Enabled: true
         - Class: rviz/Axes
           Enabled: true
-          Length: 1
+          Length: 0.5
           Name: base_link_Axes
-          Radius: 0.10000000149011612
+          Radius: 0.05000000074505806
           Reference Frame: rdg01_tf/base_link
           Value: true
         - Alpha: 1
@@ -364,6 +364,15 @@ Visualization Manager:
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
+          Value: true
+        - Class: rviz/InteractiveMarkers
+          Enable Transparency: true
+          Enabled: true
+          Name: teleoperation
+          Show Axes: false
+          Show Descriptions: true
+          Show Visual Aids: false
+          Update Topic: /rdg01/twist_marker_server/update
           Value: true
       Enabled: true
       Name: ridgeback1
@@ -509,10 +518,19 @@ Visualization Manager:
           Value: true
         - Class: rviz/Axes
           Enabled: true
-          Length: 1
+          Length: 0.5
           Name: base_link_Axes
-          Radius: 0.10000000149011612
+          Radius: 0.05000000074505806
           Reference Frame: rdg02_tf/base_link
+          Value: true
+        - Class: rviz/InteractiveMarkers
+          Enable Transparency: true
+          Enabled: true
+          Name: teleoperation
+          Show Axes: false
+          Show Descriptions: true
+          Show Visual Aids: false
+          Update Topic: /rdg02/twist_marker_server/update
           Value: true
       Enabled: true
       Name: ridgeback2
@@ -544,25 +562,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 29.177467346191406
+      Distance: 12.04452896118164
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 3.7997260093688965
-        Y: 0.2450139969587326
-        Z: -2.86006236076355
+        X: 4.790665149688721
+        Y: 1.973489761352539
+        Z: -0.771946907043457
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7853981852531433
+      Pitch: 0.6403984427452087
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.7853981852531433
+      Yaw: 0.5304012298583984
     Saved:
       - Class: rviz/Orbit
         Distance: 22.128053665161133
@@ -609,8 +627,8 @@ Window Geometry:
     collapsed: false
   Height: 845
   Hide Left Dock: false
-  Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000001ce000002adfc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d000002ad000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c000002610000000100000111000002adfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000003d000002ad000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000055d00000040fc0100000002fb0000000800540069006d006501000000000000055d000002eb00fffffffb0000000800540069006d0065010000000000000450000000000000000000000272000002ad00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Hide Right Dock: true
+  QMainWindow State: 000000ff00000000fd000000040000000000000156000002adfc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003d000002ad000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c000002610000000100000111000002adfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d000002ad000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000055d00000040fc0100000002fb0000000800540069006d006501000000000000055d000002eb00fffffffb0000000800540069006d0065010000000000000450000000000000000000000401000002ad00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -618,7 +636,7 @@ Window Geometry:
   Tool Properties:
     collapsed: false
   Views:
-    collapsed: false
+    collapsed: true
   Width: 1373
   X: 67
   Y: 27
